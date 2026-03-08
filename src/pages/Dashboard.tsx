@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { PLATFORMS } from '@/lib/platforms';
 import { LogOut, ExternalLink, Copy, Link2 } from 'lucide-react';
+import AvatarUpload from '@/components/AvatarUpload';
+import Footer from '@/components/Footer';
 
 export default function Dashboard() {
   const { user, signOut } = useAuth();
@@ -91,63 +93,69 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen px-6 py-8">
-      <div className="max-w-lg mx-auto relative z-10">
-        <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-          <div className="flex items-center gap-2">
-            <Link2 className="w-5 h-5" />
-            <h1 className="text-2xl font-heading font-bold">Dashboard</h1>
-          </div>
-          <div className="flex gap-2">
-            {slug && (
-              <>
-                <Button variant="outline" size="sm" onClick={() => {
-                  const url = `${window.location.origin}${window.location.pathname}#/p/${slug}`;
-                  navigator.clipboard.writeText(url);
-                  toast.success('Link copied!');
-                }}>
-                  <Copy className="w-4 h-4 mr-1" /> Copy
-                </Button>
-                <Button variant="outline" size="sm" onClick={() => navigate(`/p/${slug}`)}>
-                  <ExternalLink className="w-4 h-4 mr-1" /> View
-                </Button>
-              </>
-            )}
-            <Button variant="ghost" size="sm" onClick={handleLogout}>
-              <LogOut className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-
-        <form onSubmit={handleSave} className="glass-card rounded-3xl p-6 shadow-lg space-y-6">
-          <div className="space-y-4">
-            <h3 className="font-heading text-lg font-bold">Profile Information</h3>
-            <div>
-              <Label htmlFor="name">Display Name *</Label>
-              <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your display name" required autoComplete="name" />
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-1 px-6 py-8">
+        <div className="max-w-lg mx-auto relative z-10">
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+            <div className="flex items-center gap-2">
+              <Link2 className="w-5 h-5" />
+              <h1 className="text-2xl font-heading font-bold">Dashboard</h1>
             </div>
-            <div>
-              <Label htmlFor="avatar">Profile Picture URL (optional)</Label>
-              <Input id="avatar" type="url" inputMode="url" value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} placeholder="https://example.com/photo.jpg" />
+            <div className="flex gap-2">
+              {slug && (
+                <>
+                  <Button variant="outline" size="sm" onClick={() => {
+                    const url = `${window.location.origin}${window.location.pathname}#/p/${slug}`;
+                    navigator.clipboard.writeText(url);
+                    toast.success('Link copied!');
+                  }}>
+                    <Copy className="w-4 h-4 mr-1" /> Copy
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => navigate(`/p/${slug}`)}>
+                    <ExternalLink className="w-4 h-4 mr-1" /> View
+                  </Button>
+                </>
+              )}
+              <Button variant="ghost" size="sm" onClick={handleLogout}>
+                <LogOut className="w-4 h-4" />
+              </Button>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="font-heading text-lg font-bold">Social Links</h3>
-            <p className="text-sm text-muted-foreground">Fill only the links you want to display.</p>
-            {PLATFORMS.map(p => (
-              <div key={p.key}>
-                <Label htmlFor={p.key}>{p.label}</Label>
-                <Input id={p.key} type="url" inputMode="url" value={links[p.key] || ''} onChange={e => handleLinkChange(p.key, e.target.value)} placeholder={p.placeholder} />
+          <form onSubmit={handleSave} className="glass-card rounded-3xl p-6 shadow-lg space-y-6">
+            <div className="space-y-4">
+              <h3 className="font-heading text-lg font-bold">Profile Information</h3>
+              
+              <AvatarUpload currentUrl={avatarUrl} onUploaded={setAvatarUrl} displayName={name} />
+
+              <div>
+                <Label htmlFor="name">Display Name *</Label>
+                <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your display name" required autoComplete="name" />
               </div>
-            ))}
-          </div>
+              <div>
+                <Label htmlFor="avatar-url" className="text-xs text-muted-foreground">Or paste an image URL</Label>
+                <Input id="avatar-url" type="url" inputMode="url" value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} placeholder="https://example.com/photo.jpg" />
+              </div>
+            </div>
 
-          <Button type="submit" variant="gold" className="w-full" disabled={loading}>
-            {loading ? 'Saving...' : 'Save Profile'}
-          </Button>
-        </form>
+            <div className="space-y-4">
+              <h3 className="font-heading text-lg font-bold">Social Links</h3>
+              <p className="text-sm text-muted-foreground">Fill only the links you want to display.</p>
+              {PLATFORMS.map(p => (
+                <div key={p.key}>
+                  <Label htmlFor={p.key}>{p.label}</Label>
+                  <Input id={p.key} type="url" inputMode="url" value={links[p.key] || ''} onChange={e => handleLinkChange(p.key, e.target.value)} placeholder={p.placeholder} />
+                </div>
+              ))}
+            </div>
+
+            <Button type="submit" variant="gold" className="w-full" disabled={loading}>
+              {loading ? 'Saving...' : 'Save Profile'}
+            </Button>
+          </form>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

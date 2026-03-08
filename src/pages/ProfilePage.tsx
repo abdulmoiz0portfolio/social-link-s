@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { PLATFORMS } from '@/lib/platforms';
 import { Button } from '@/components/ui/button';
 import { Facebook, Instagram, Linkedin, Youtube, Twitter, MessageCircle, Globe, Link2, Sparkles } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 const ICON_MAP: Record<string, any> = {
   Facebook, Instagram, Linkedin, Youtube, Twitter, MessageCircle, Globe,
@@ -66,67 +67,70 @@ export default function ProfilePage() {
   const getPlatformInfo = (platformKey: string) => PLATFORMS.find(p => p.key === platformKey);
 
   return (
-    <div className="min-h-screen px-6 py-10 relative">
+    <div className="min-h-screen flex flex-col relative">
       <div className="absolute top-[-5%] right-[-10%] w-64 h-64 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
       <div className="absolute bottom-[-5%] left-[-10%] w-80 h-80 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
 
-      <div className="max-w-md mx-auto relative z-10">
-        {/* Profile header */}
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="mx-auto w-24 h-24 rounded-full overflow-hidden border-4 border-accent/30 shadow-lg mb-4 bg-card flex items-center justify-center">
-            {profile?.avatar_url ? (
-              <img src={profile.avatar_url} alt={profile.display_name} className="w-full h-full object-cover" />
-            ) : (
-              <span className="text-2xl font-heading font-bold text-foreground">
-                {getInitials(profile?.display_name || '')}
-              </span>
-            )}
+      <div className="flex-1 px-6 py-10">
+        <div className="max-w-md mx-auto relative z-10">
+          {/* Profile header */}
+          <div className="text-center mb-8 animate-fade-in">
+            <div className="mx-auto w-24 h-24 rounded-full overflow-hidden border-4 border-accent/30 shadow-lg mb-4 bg-card flex items-center justify-center">
+              {profile?.avatar_url ? (
+                <img src={profile.avatar_url} alt={profile.display_name} className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-2xl font-heading font-bold text-foreground">
+                  {getInitials(profile?.display_name || '')}
+                </span>
+              )}
+            </div>
+            <h1 className="text-3xl font-heading font-bold">{profile?.display_name}</h1>
+            <div className="w-16 h-1 bg-accent mx-auto mt-3 rounded-full"></div>
           </div>
-          <h1 className="text-3xl font-heading font-bold">{profile?.display_name}</h1>
-          <div className="w-16 h-1 bg-accent mx-auto mt-3 rounded-full"></div>
-        </div>
 
-        {/* Links */}
-        <div className="space-y-3">
-          {links.map((link, i) => {
-            const info = getPlatformInfo(link.platform);
-            if (!info) return null;
-            const IconComp = ICON_MAP[info.icon] || Globe;
-            return (
-              <a
-                key={link.platform}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              >
-                <Button variant="social-link" className="w-full h-14 text-base justify-start px-6 animate-fade-in" asChild>
-                  <span>
-                    <IconComp className="w-5 h-5 mr-3" />
-                    {info.label}
-                  </span>
-                </Button>
-              </a>
-            );
-          })}
-        </div>
+          {/* Links */}
+          <div className="space-y-3">
+            {links.map((link, i) => {
+              const info = getPlatformInfo(link.platform);
+              if (!info) return null;
+              const IconComp = ICON_MAP[info.icon] || Globe;
+              return (
+                <a
+                  key={link.platform}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  <Button variant="social-link" className="w-full h-14 text-base justify-start px-6 animate-fade-in" asChild>
+                    <span>
+                      <IconComp className="w-5 h-5 mr-3" />
+                      {info.label}
+                    </span>
+                  </Button>
+                </a>
+              );
+            })}
+          </div>
 
-        {links.length === 0 && (
-          <p className="text-center text-muted-foreground mt-8">No links added yet.</p>
-        )}
+          {links.length === 0 && (
+            <p className="text-center text-muted-foreground mt-8">No links added yet.</p>
+          )}
 
-        {/* Footer CTA */}
-        <div className="text-center mt-12 space-y-3">
-          <a
-            href={`${window.location.origin}${window.location.pathname}#/`}
-            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-3 rounded-full text-sm font-body font-semibold transition-all hover:shadow-lg hover:scale-105 active:scale-[0.97] min-h-[44px]"
-          >
-            <Sparkles className="w-4 h-4" />
-            Make your own Social Link
-          </a>
+          {/* CTA */}
+          <div className="text-center mt-12">
+            <a
+              href={`${window.location.origin}${window.location.pathname}#/`}
+              className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-3 rounded-full text-sm font-body font-semibold transition-all hover:shadow-lg hover:scale-105 active:scale-[0.97] min-h-[44px]"
+            >
+              <Sparkles className="w-4 h-4" />
+              Make your own Social Link
+            </a>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
