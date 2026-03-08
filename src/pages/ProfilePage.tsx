@@ -53,7 +53,7 @@ export default function ProfilePage() {
 
   if (notFound) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center px-6">
         <div className="text-center">
           <h1 className="text-2xl font-heading font-bold mb-2">Profile Not Found</h1>
           <p className="text-muted-foreground">This link page doesn't exist.</p>
@@ -63,12 +63,10 @@ export default function ProfilePage() {
   }
 
   const getInitials = (name: string) => name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-
   const getPlatformInfo = (platformKey: string) => PLATFORMS.find(p => p.key === platformKey);
 
   return (
-    <div className="min-h-screen px-4 py-8 relative">
-      {/* Decorative blobs */}
+    <div className="min-h-screen px-6 py-10 relative">
       <div className="absolute top-[-5%] right-[-10%] w-64 h-64 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
       <div className="absolute bottom-[-5%] left-[-10%] w-80 h-80 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
 
@@ -122,12 +120,11 @@ export default function ProfilePage() {
         <div className="text-center mt-12 space-y-3">
           <a
             href={`${window.location.origin}${window.location.pathname}#/`}
-            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-2.5 rounded-full text-sm font-body font-semibold transition-all hover:shadow-lg hover:scale-105"
+            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-3 rounded-full text-sm font-body font-semibold transition-all hover:shadow-lg hover:scale-105 active:scale-[0.97] min-h-[44px]"
           >
             <Sparkles className="w-4 h-4" />
             Make your own Social Link
           </a>
-          <a href={`${window.location.origin}${window.location.pathname}#/`} className="text-xs text-muted-foreground hover:text-foreground transition-colors">Powered by <span className="font-heading font-bold">Social Link</span></a>
         </div>
       </div>
     </div>
