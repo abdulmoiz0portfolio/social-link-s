@@ -127,7 +127,7 @@ export default function ProfilePage() {
             <Sparkles className="w-4 h-4" />
             Make your own Social Link
           </a>
-          <p className="text-xs text-muted-foreground">Powered by <span className="font-heading font-bold">Social Link</span></p>
+          <a href={`${window.location.origin}${window.location.pathname}#/`} className="text-xs text-muted-foreground hover:text-foreground transition-colors">Powered by <span className="font-heading font-bold">Social Link</span></a>
         </div>
       </div>
     </div>
