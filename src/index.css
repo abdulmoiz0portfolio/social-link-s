@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lato:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,53 +6,52 @@
 
 @layer base {
   :root {
-    --background: 40 33% 97%;
-    --foreground: 30 10% 15%;
+    --background: 72 78% 78%;
+    --foreground: 140 35% 15%;
 
-    --card: 40 40% 98%;
-    --card-foreground: 30 10% 15%;
+    --card: 72 60% 88%;
+    --card-foreground: 140 35% 15%;
 
-    --popover: 40 40% 98%;
-    --popover-foreground: 30 10% 15%;
+    --popover: 72 60% 90%;
+    --popover-foreground: 140 35% 15%;
 
-    --primary: 38 60% 52%;
-    --primary-foreground: 40 33% 97%;
+    --primary: 72 85% 55%;
+    --primary-foreground: 140 40% 12%;
 
-    --secondary: 40 30% 93%;
-    --secondary-foreground: 30 10% 25%;
+    --secondary: 72 40% 82%;
+    --secondary-foreground: 140 35% 18%;
 
-    --muted: 40 20% 94%;
-    --muted-foreground: 30 8% 50%;
+    --muted: 72 30% 85%;
+    --muted-foreground: 140 20% 35%;
 
-    --accent: 155 25% 88%;
-    --accent-foreground: 155 30% 20%;
+    --accent: 140 30% 25%;
+    --accent-foreground: 72 85% 55%;
 
-    --destructive: 0 65% 55%;
-    --destructive-foreground: 40 33% 97%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 38 30% 88%;
-    --input: 38 30% 88%;
-    --ring: 38 60% 52%;
+    --border: 140 20% 30%;
+    --input: 140 20% 30%;
+    --ring: 140 35% 20%;
 
-    --radius: 0.75rem;
+    --radius: 1.5rem;
 
-    --gold: 38 60% 52%;
-    --gold-light: 40 50% 85%;
-    --cream: 40 33% 97%;
-    --cream-dark: 40 25% 92%;
-    --mint: 155 25% 88%;
+    --lime: 72 85% 55%;
+    --lime-light: 72 70% 75%;
+    --forest: 140 35% 15%;
+    --forest-light: 140 25% 25%;
 
-    --font-heading: 'Amiri', serif;
-    --font-body: 'Lato', sans-serif;
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 72 60% 88%;
+    --sidebar-foreground: 140 35% 15%;
+    --sidebar-primary: 140 35% 15%;
+    --sidebar-primary-foreground: 72 85% 55%;
+    --sidebar-accent: 72 40% 82%;
+    --sidebar-accent-foreground: 140 35% 15%;
+    --sidebar-border: 140 20% 30%;
+    --sidebar-ring: 140 35% 20%;
   }
 }
 
@@ -72,26 +71,9 @@
 }
 
 @layer components {
-  .islamic-pattern-bg {
-    position: relative;
-  }
-  .islamic-pattern-bg::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    opacity: 0.06;
-    background-repeat: repeat;
-    background-size: 200px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .arch-card {
-    border-radius: 1rem 1rem 50% 50% / 1rem 1rem 2rem 2rem;
-  }
-
-  .arch-top {
-    border-radius: 2rem 2rem 0 0;
-    clip-path: ellipse(55% 100% at 50% 100%);
+  .glass-card {
+    background: hsl(72 60% 88% / 0.6);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid hsl(140 20% 30% / 0.15);
   }
 }
