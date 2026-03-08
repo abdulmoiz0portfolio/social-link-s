@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { PLATFORMS } from '@/lib/platforms';
 import { Link2 } from 'lucide-react';
+import AvatarUpload from '@/components/AvatarUpload';
+import Footer from '@/components/Footer';
 
 export default function GuestPage() {
   const navigate = useNavigate();
@@ -60,47 +62,53 @@ export default function GuestPage() {
   };
 
   return (
-    <div className="min-h-screen px-6 py-8">
-      <div className="max-w-lg mx-auto relative z-10">
-        <div className="bg-accent text-accent-foreground text-center py-6 px-6 rounded-t-3xl">
-          <Link2 className="w-6 h-6 mx-auto mb-1" />
-          <h1 className="text-2xl font-heading font-bold">Social Link</h1>
-          <p className="mt-1 text-sm opacity-80 font-body">Create your link page</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="glass-card rounded-b-3xl p-6 shadow-lg space-y-6">
-          <div className="space-y-4">
-            <h3 className="font-heading text-lg font-bold">Your Information</h3>
-            <div>
-              <Label htmlFor="name">Display Name *</Label>
-              <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" required autoComplete="name" />
-            </div>
-            <div>
-              <Label htmlFor="email">Email *</Label>
-              <Input id="email" type="email" inputMode="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" required />
-            </div>
-            <div>
-              <Label htmlFor="avatar">Profile Picture URL (optional)</Label>
-              <Input id="avatar" type="url" inputMode="url" value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} placeholder="https://example.com/photo.jpg" />
-            </div>
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-1 px-6 py-8">
+        <div className="max-w-lg mx-auto relative z-10">
+          <div className="bg-accent text-accent-foreground text-center py-6 px-6 rounded-t-3xl">
+            <Link2 className="w-6 h-6 mx-auto mb-1" />
+            <h1 className="text-2xl font-heading font-bold">Social Link</h1>
+            <p className="mt-1 text-sm opacity-80 font-body">Create your link page</p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="font-heading text-lg font-bold">Social Links</h3>
-            <p className="text-sm text-muted-foreground">Fill only the links you want to display.</p>
-            {PLATFORMS.map(p => (
-              <div key={p.key}>
-                <Label htmlFor={p.key}>{p.label}</Label>
-                <Input id={p.key} type="url" inputMode="url" value={links[p.key] || ''} onChange={e => handleLinkChange(p.key, e.target.value)} placeholder={p.placeholder} />
+          <form onSubmit={handleSubmit} className="glass-card rounded-b-3xl p-6 shadow-lg space-y-6">
+            <div className="space-y-4">
+              <h3 className="font-heading text-lg font-bold">Your Information</h3>
+
+              <AvatarUpload currentUrl={avatarUrl} onUploaded={setAvatarUrl} displayName={name} />
+
+              <div>
+                <Label htmlFor="name">Display Name *</Label>
+                <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" required autoComplete="name" />
               </div>
-            ))}
-          </div>
+              <div>
+                <Label htmlFor="email">Email *</Label>
+                <Input id="email" type="email" inputMode="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" required />
+              </div>
+              <div>
+                <Label htmlFor="avatar-url" className="text-xs text-muted-foreground">Or paste an image URL</Label>
+                <Input id="avatar-url" type="url" inputMode="url" value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} placeholder="https://example.com/photo.jpg" />
+              </div>
+            </div>
 
-          <Button type="submit" variant="gold" className="w-full" disabled={loading}>
-            {loading ? 'Creating...' : 'Create My Link Page'}
-          </Button>
-        </form>
+            <div className="space-y-4">
+              <h3 className="font-heading text-lg font-bold">Social Links</h3>
+              <p className="text-sm text-muted-foreground">Fill only the links you want to display.</p>
+              {PLATFORMS.map(p => (
+                <div key={p.key}>
+                  <Label htmlFor={p.key}>{p.label}</Label>
+                  <Input id={p.key} type="url" inputMode="url" value={links[p.key] || ''} onChange={e => handleLinkChange(p.key, e.target.value)} placeholder={p.placeholder} />
+                </div>
+              ))}
+            </div>
+
+            <Button type="submit" variant="gold" className="w-full" disabled={loading}>
+              {loading ? 'Creating...' : 'Create My Link Page'}
+            </Button>
+          </form>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }
