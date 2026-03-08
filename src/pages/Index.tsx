@@ -21,8 +21,8 @@ export default function Index() {
 
         <div className="text-center relative z-10 max-w-xl w-full animate-fade-in">
           <div className="mb-10">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-accent text-accent-foreground mb-6 shadow-lg">
-              <Link2 className="w-10 h-10" />
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-accent text-accent-foreground mb-6 shadow-lg overflow-hidden">
+              <img src={logo} alt="Social Link" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-5xl md:text-7xl font-heading font-bold tracking-tight leading-none mb-4">
               Social Link
