@@ -32,16 +32,15 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-md relative z-10">
-        {/* Header */}
         <div className="bg-accent text-accent-foreground text-center py-8 px-6 rounded-t-3xl">
           <Link2 className="w-8 h-8 mx-auto mb-2" />
           <h1 className="text-3xl font-heading font-bold">Social Link</h1>
           <p className="mt-1 text-sm opacity-80 font-body">Your link hub</p>
         </div>
 
-        <div className="glass-card rounded-b-3xl p-8 shadow-lg">
+        <div className="glass-card rounded-b-3xl p-6 sm:p-8 shadow-lg">
           <h2 className="text-xl font-heading font-bold text-center mb-6">
             {isSignUp ? 'Create Account' : 'Welcome Back'}
           </h2>
@@ -49,11 +48,11 @@ export default function AuthPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" required className="rounded-xl" />
+              <Input id="email" type="email" inputMode="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" required />
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required minLength={6} className="rounded-xl" />
+              <Input id="password" type="password" autoComplete={isSignUp ? 'new-password' : 'current-password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required minLength={6} />
             </div>
             <Button type="submit" variant="gold" className="w-full" disabled={loading}>
               {loading ? 'Please wait...' : isSignUp ? 'Sign Up' : 'Sign In'}
@@ -61,7 +60,7 @@ export default function AuthPage() {
           </form>
 
           <div className="mt-4 text-center">
-            <button onClick={() => setIsSignUp(!isSignUp)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <button onClick={() => setIsSignUp(!isSignUp)} className="text-sm text-muted-foreground hover:text-foreground transition-colors min-h-[44px] px-2">
               {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
             </button>
           </div>

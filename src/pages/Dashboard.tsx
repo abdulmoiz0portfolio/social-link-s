@@ -91,9 +91,9 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8">
+    <div className="min-h-screen px-6 py-8">
       <div className="max-w-lg mx-auto relative z-10">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
           <div className="flex items-center gap-2">
             <Link2 className="w-5 h-5" />
             <h1 className="text-2xl font-heading font-bold">Dashboard</h1>
@@ -124,11 +124,11 @@ export default function Dashboard() {
             <h3 className="font-heading text-lg font-bold">Profile Information</h3>
             <div>
               <Label htmlFor="name">Display Name *</Label>
-              <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your display name" required className="rounded-xl" />
+              <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your display name" required autoComplete="name" />
             </div>
             <div>
               <Label htmlFor="avatar">Profile Picture URL (optional)</Label>
-              <Input id="avatar" value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} placeholder="https://example.com/photo.jpg" className="rounded-xl" />
+              <Input id="avatar" type="url" inputMode="url" value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} placeholder="https://example.com/photo.jpg" />
             </div>
           </div>
 
@@ -138,7 +138,7 @@ export default function Dashboard() {
             {PLATFORMS.map(p => (
               <div key={p.key}>
                 <Label htmlFor={p.key}>{p.label}</Label>
-                <Input id={p.key} value={links[p.key] || ''} onChange={e => handleLinkChange(p.key, e.target.value)} placeholder={p.placeholder} className="rounded-xl" />
+                <Input id={p.key} type="url" inputMode="url" value={links[p.key] || ''} onChange={e => handleLinkChange(p.key, e.target.value)} placeholder={p.placeholder} />
               </div>
             ))}
           </div>
