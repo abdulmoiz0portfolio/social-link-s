@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { ArrowRight, Link2, Zap, Share2, Smartphone } from 'lucide-react';
+import { ArrowRight, Zap, Share2, Smartphone } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import Footer from '@/components/Footer';
 
 export default function Index() {
