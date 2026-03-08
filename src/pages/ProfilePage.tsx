@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { PLATFORMS } from '@/lib/platforms';
 import { Button } from '@/components/ui/button';
-import { Facebook, Instagram, Linkedin, Youtube, Twitter, MessageCircle, Globe, User } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Youtube, Twitter, MessageCircle, Globe, User, Sparkles } from 'lucide-react';
 import islamicPattern from '@/assets/islamic-pattern.png';
 
 const ICON_MAP: Record<string, any> = {
@@ -134,9 +134,16 @@ export default function ProfilePage() {
           <p className="text-center text-muted-foreground mt-8">No links added yet.</p>
         )}
 
-        {/* Footer */}
-        <div className="text-center mt-12 text-xs text-muted-foreground">
-          <p>✦ Powered by <span className="font-heading font-bold">LinkNoor</span> ✦</p>
+        {/* Footer with CTA */}
+        <div className="text-center mt-12 space-y-3">
+          <a
+            href={`${window.location.origin}${window.location.pathname}#/`}
+            className="inline-flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-5 py-2.5 rounded-full text-sm font-body font-semibold transition-colors"
+          >
+            <Sparkles className="w-4 h-4" />
+            Make your own LinkNoor
+          </a>
+          <p className="text-xs text-muted-foreground">✦ Powered by <span className="font-heading font-bold">LinkNoor</span> ✦</p>
         </div>
       </div>
     </div>
