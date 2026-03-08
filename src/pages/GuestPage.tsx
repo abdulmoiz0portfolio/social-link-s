@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { PLATFORMS, PlatformKey } from '@/lib/platforms';
-import islamicPattern from '@/assets/islamic-pattern.png';
+import { PLATFORMS } from '@/lib/platforms';
+import { Link2 } from 'lucide-react';
 
 export default function GuestPage() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function GuestPage() {
 
     const activeLinks = Object.entries(links).filter(([_, url]) => url.trim());
     if (activeLinks.length > 0) {
-      const { error: linksError } = await supabase.from('social_links').insert(
+      await supabase.from('social_links').insert(
         activeLinks.map(([platform, url], i) => ({
           profile_id: profile.id,
           platform,
@@ -52,9 +52,6 @@ export default function GuestPage() {
           display_order: i,
         }))
       );
-      if (linksError) {
-        toast.error('Profile created but links failed to save');
-      }
     }
 
     toast.success('Your link page is ready!');
@@ -63,28 +60,28 @@ export default function GuestPage() {
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 relative">
-      <img src={islamicPattern} alt="" className="fixed inset-0 w-full h-full object-cover opacity-[0.04] pointer-events-none" />
+    <div className="min-h-screen px-4 py-8">
       <div className="max-w-lg mx-auto relative z-10">
-        <div className="bg-primary text-primary-foreground text-center py-6 px-6 rounded-t-[3rem]">
-          <h1 className="text-2xl font-heading font-bold">✦ Guest Profile ✦</h1>
-          <p className="mt-1 text-sm opacity-90 font-body">Create your link page</p>
+        <div className="bg-accent text-accent-foreground text-center py-6 px-6 rounded-t-3xl">
+          <Link2 className="w-6 h-6 mx-auto mb-1" />
+          <h1 className="text-2xl font-heading font-bold">Guest Profile</h1>
+          <p className="mt-1 text-sm opacity-80 font-body">Create your link page</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-card border border-border rounded-b-xl p-6 shadow-lg space-y-6">
+        <form onSubmit={handleSubmit} className="glass-card rounded-b-3xl p-6 shadow-lg space-y-6">
           <div className="space-y-4">
             <h3 className="font-heading text-lg font-bold">Your Information</h3>
             <div>
               <Label htmlFor="name">Display Name *</Label>
-              <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" required />
+              <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" required className="rounded-xl" />
             </div>
             <div>
               <Label htmlFor="email">Email *</Label>
-              <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" required />
+              <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" required className="rounded-xl" />
             </div>
             <div>
               <Label htmlFor="avatar">Profile Picture URL (optional)</Label>
-              <Input id="avatar" value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} placeholder="https://example.com/photo.jpg" />
+              <Input id="avatar" value={avatarUrl} onChange={e => setAvatarUrl(e.target.value)} placeholder="https://example.com/photo.jpg" className="rounded-xl" />
             </div>
           </div>
 
@@ -94,12 +91,7 @@ export default function GuestPage() {
             {PLATFORMS.map(p => (
               <div key={p.key}>
                 <Label htmlFor={p.key}>{p.label}</Label>
-                <Input
-                  id={p.key}
-                  value={links[p.key] || ''}
-                  onChange={e => handleLinkChange(p.key, e.target.value)}
-                  placeholder={p.placeholder}
-                />
+                <Input id={p.key} value={links[p.key] || ''} onChange={e => handleLinkChange(p.key, e.target.value)} placeholder={p.placeholder} className="rounded-xl" />
               </div>
             ))}
           </div>

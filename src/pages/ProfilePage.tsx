@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { PLATFORMS } from '@/lib/platforms';
 import { Button } from '@/components/ui/button';
-import { Facebook, Instagram, Linkedin, Youtube, Twitter, MessageCircle, Globe, User, Sparkles } from 'lucide-react';
-import islamicPattern from '@/assets/islamic-pattern.png';
+import { Facebook, Instagram, Linkedin, Youtube, Twitter, MessageCircle, Globe, Link2, Sparkles } from 'lucide-react';
 
 const ICON_MAP: Record<string, any> = {
   Facebook, Instagram, Linkedin, Youtube, Twitter, MessageCircle, Globe,
@@ -35,35 +34,21 @@ export default function ProfilePage() {
 
   const loadProfile = async () => {
     const { data: profileData, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('slug', slug)
-      .maybeSingle();
+      .from('profiles').select('*').eq('slug', slug).maybeSingle();
 
-    if (error || !profileData) {
-      setNotFound(true);
-      setLoading(false);
-      return;
-    }
+    if (error || !profileData) { setNotFound(true); setLoading(false); return; }
 
     setProfile({ display_name: profileData.display_name, avatar_url: profileData.avatar_url });
 
     const { data: linksData } = await supabase
-      .from('social_links')
-      .select('*')
-      .eq('profile_id', profileData.id)
-      .order('display_order');
+      .from('social_links').select('*').eq('profile_id', profileData.id).order('display_order');
 
     if (linksData) setLinks(linksData);
     setLoading(false);
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-muted-foreground font-body animate-pulse">Loading...</p>
-      </div>
-    );
+    return <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground font-body animate-pulse">Loading...</p></div>;
   }
 
   if (notFound) {
@@ -77,31 +62,30 @@ export default function ProfilePage() {
     );
   }
 
-  const getInitials = (name: string) => {
-    return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-  };
+  const getInitials = (name: string) => name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
 
-  const getPlatformInfo = (platformKey: string) => {
-    return PLATFORMS.find(p => p.key === platformKey);
-  };
+  const getPlatformInfo = (platformKey: string) => PLATFORMS.find(p => p.key === platformKey);
 
   return (
     <div className="min-h-screen px-4 py-8 relative">
-      <img src={islamicPattern} alt="" className="fixed inset-0 w-full h-full object-cover opacity-[0.04] pointer-events-none" />
+      {/* Decorative blobs */}
+      <div className="absolute top-[-5%] right-[-10%] w-64 h-64 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-[-5%] left-[-10%] w-80 h-80 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+
       <div className="max-w-md mx-auto relative z-10">
         {/* Profile header */}
         <div className="text-center mb-8 animate-fade-in">
-          <div className="mx-auto w-24 h-24 rounded-full overflow-hidden border-4 border-primary/30 shadow-lg mb-4 bg-secondary flex items-center justify-center">
+          <div className="mx-auto w-24 h-24 rounded-full overflow-hidden border-4 border-accent/30 shadow-lg mb-4 bg-card flex items-center justify-center">
             {profile?.avatar_url ? (
               <img src={profile.avatar_url} alt={profile.display_name} className="w-full h-full object-cover" />
             ) : (
-              <span className="text-2xl font-heading font-bold text-primary">
+              <span className="text-2xl font-heading font-bold text-foreground">
                 {getInitials(profile?.display_name || '')}
               </span>
             )}
           </div>
           <h1 className="text-3xl font-heading font-bold">{profile?.display_name}</h1>
-          <div className="w-16 h-0.5 bg-primary/40 mx-auto mt-3 rounded-full"></div>
+          <div className="w-16 h-1 bg-accent mx-auto mt-3 rounded-full"></div>
         </div>
 
         {/* Links */}
@@ -121,7 +105,7 @@ export default function ProfilePage() {
               >
                 <Button variant="social-link" className="w-full h-14 text-base justify-start px-6 animate-fade-in" asChild>
                   <span>
-                    <IconComp className="w-5 h-5 mr-3 text-primary" />
+                    <IconComp className="w-5 h-5 mr-3" />
                     {info.label}
                   </span>
                 </Button>
@@ -134,16 +118,16 @@ export default function ProfilePage() {
           <p className="text-center text-muted-foreground mt-8">No links added yet.</p>
         )}
 
-        {/* Footer with CTA */}
+        {/* Footer CTA */}
         <div className="text-center mt-12 space-y-3">
           <a
             href={`${window.location.origin}${window.location.pathname}#/`}
-            className="inline-flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-5 py-2.5 rounded-full text-sm font-body font-semibold transition-colors"
+            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-2.5 rounded-full text-sm font-body font-semibold transition-all hover:shadow-lg hover:scale-105"
           >
             <Sparkles className="w-4 h-4" />
-            Make your own LinkNoor
+            Make your own Social Link
           </a>
-          <p className="text-xs text-muted-foreground">✦ Powered by <span className="font-heading font-bold">LinkNoor</span> ✦</p>
+          <p className="text-xs text-muted-foreground">Powered by <span className="font-heading font-bold">Social Link</span></p>
         </div>
       </div>
     </div>
