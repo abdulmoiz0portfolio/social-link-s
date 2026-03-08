@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { PLATFORMS } from '@/lib/platforms';
-import { LogOut, ExternalLink } from 'lucide-react';
+import { LogOut, ExternalLink, Copy } from 'lucide-react';
 import islamicPattern from '@/assets/islamic-pattern.png';
 
 export default function Dashboard() {
@@ -134,9 +134,18 @@ export default function Dashboard() {
           <h1 className="text-2xl font-heading font-bold">✦ Dashboard</h1>
           <div className="flex gap-2">
             {slug && (
-              <Button variant="outline" size="sm" onClick={() => navigate(`/p/${slug}`)}>
-                <ExternalLink className="w-4 h-4 mr-1" /> View Page
-              </Button>
+              <>
+                <Button variant="outline" size="sm" onClick={() => {
+                  const url = `${window.location.origin}${window.location.pathname}#/p/${slug}`;
+                  navigator.clipboard.writeText(url);
+                  toast.success('Link copied to clipboard!');
+                }}>
+                  <Copy className="w-4 h-4 mr-1" /> Copy Link
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => navigate(`/p/${slug}`)}>
+                  <ExternalLink className="w-4 h-4 mr-1" /> View Page
+                </Button>
+              </>
             )}
             <Button variant="ghost" size="sm" onClick={handleLogout}>
               <LogOut className="w-4 h-4 mr-1" /> Logout
